@@ -3,38 +3,152 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Distribuidora La Española - Gestión de Inventario</title>
+    <meta
+      name="description"
+      content="Panel de inventario de Distribuidora La Española: gestión de productos de aseo, limpieza e higiene del hogar."
+    />
+    <meta name="theme-color" content="#0f2547" />
+    <title>Distribuidora La Española — Panel de Inventario</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="bg-light">
-    <nav class="navbar navbar-dark bg-primary shadow-sm mb-4">
-      <div class="container">
-        <span class="navbar-brand mb-0 h1"
-          >Distribuidora La Española — Inventario de Aseo y Limpieza</span
-        >
-        <span class="text-white-50 small">Ingeniería de Software III</span>
-      </div>
-    </nav>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-    <div class="container pb-5">
-      <!-- Contenedor de Alertas HTTP (200, 201, 204, 400, 404, 500) -->
-      <div id="alert-container"></div>
+    <header class="app-bar">
+      <div class="app-bar__inner">
+        <a class="brand" href="#contenido" aria-label="Distribuidora La Española, ir al inicio">
+          <span
+            class="brand-mark"
+            role="img"
+            aria-label="Escudo de Distribuidora La Española"
+          ></span>
+          <span class="brand-copy">
+            <span class="brand-name">Distribuidora <em>La Española</em></span>
+            <span class="brand-sub">Panel de inventario · Aseo y limpieza</span>
+          </span>
+        </a>
+
+        <div class="app-bar__actions">
+          <span
+            class="status-pill"
+            id="api-status"
+            data-state="checking"
+            role="status"
+            aria-live="polite"
+          >
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="api-status-text">Verificando API…</span>
+          </span>
+          <span class="course-pill d-none d-lg-inline-flex">
+            <i class="bi bi-mortarboard" aria-hidden="true"></i>
+            Ing. de Software III
+          </span>
+          <div class="d-none d-md-flex gap-2">
+            <a href="#catalogo" class="btn btn-ghost btn-sm">Catálogo</a>
+            <a href="#formulario" class="btn btn-brand btn-sm">
+              <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>Nuevo producto
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="contenido" class="page">
+      <section class="hero" aria-label="Banner de Distribuidora La Española">
+        <img
+          class="hero__img"
+          src="public/banner-logo.jpg"
+          alt="Banner de Distribuidora La Española: tu fuente confiable de productos populares"
+          width="1408"
+          height="330"
+          fetchpriority="high"
+        />
+        <div class="hero__scrim" aria-hidden="true"></div>
+        <div class="hero__badge">
+          <span class="dot" aria-hidden="true"></span>
+          Inventario en vivo
+          <time id="last-update" datetime="">—</time>
+        </div>
+      </section>
+
+      <section class="kpis" aria-label="Resumen del inventario">
+        <article class="kpi">
+          <span class="kpi__icon kpi__icon--blue" aria-hidden="true">
+            <i class="bi bi-box-seam"></i>
+          </span>
+          <div>
+            <span class="kpi__label">Productos</span>
+            <strong class="kpi__value" id="kpi-productos">0</strong>
+            <span class="kpi__hint">referencias registradas</span>
+          </div>
+        </article>
+
+        <article class="kpi">
+          <span class="kpi__icon kpi__icon--green" aria-hidden="true">
+            <i class="bi bi-layers"></i>
+          </span>
+          <div>
+            <span class="kpi__label">Unidades en stock</span>
+            <strong class="kpi__value" id="kpi-unidades">0</strong>
+            <span class="kpi__hint">disponibles en bodega</span>
+          </div>
+        </article>
+
+        <article class="kpi">
+          <span class="kpi__icon kpi__icon--gold" aria-hidden="true">
+            <i class="bi bi-tags"></i>
+          </span>
+          <div>
+            <span class="kpi__label">Categorías activas</span>
+            <strong class="kpi__value" id="kpi-categorias">0 / 5</strong>
+            <span class="kpi__hint">líneas de producto</span>
+          </div>
+        </article>
+
+        <article class="kpi">
+          <span class="kpi__icon kpi__icon--red" aria-hidden="true">
+            <i class="bi bi-cash-stack"></i>
+          </span>
+          <div>
+            <span class="kpi__label">Valor del inventario</span>
+            <strong class="kpi__value" id="kpi-valor">$ 0</strong>
+            <span class="kpi__hint">precio × stock</span>
+          </div>
+        </article>
+      </section>
 
       <div class="row g-4">
-        <!-- Formulario (POST / PUT) -->
-        <div class="col-lg-4">
-          <div class="card shadow-sm">
-            <div
-              class="card-header bg-dark text-white fw-semibold"
-              id="form-title"
-            >
-              Nuevo Producto
+        <div class="col-xl-4" id="formulario">
+          <section class="panel form-panel" aria-labelledby="form-title">
+            <div class="panel__head">
+              <span class="panel__eyebrow">
+                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                Registro de producto
+              </span>
+              <h1 class="panel__title" id="form-title">Nuevo producto</h1>
+              <span class="panel__sub" id="form-sub">
+                Completa los datos para agregarlo al catálogo
+              </span>
             </div>
-            <div class="card-body">
-              <p class="small text-muted mb-3">
+
+            <div class="form-body">
+              <p class="biz-note">
+                <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
                 Solo productos de aseo, limpieza e higiene del hogar. No se
                 permiten alimentos ni comestibles.
               </p>
@@ -43,31 +157,36 @@
                 <input type="hidden" id="product-id" />
 
                 <div class="mb-3">
-                  <label for="codigo_barras" class="form-label"
-                    >Código de Barras *</label
-                  >
+                  <label for="codigo_barras" class="form-label">
+                    Código de barras *
+                  </label>
                   <input
                     type="text"
                     class="form-control"
                     id="codigo_barras"
+                    name="codigo_barras"
                     required
+                    autocomplete="off"
                     placeholder="Ej. 7701234567890"
+                    aria-describedby="codigo-feedback"
                   />
-                  <div class="invalid-feedback">
+                  <div class="invalid-feedback" id="codigo-feedback">
                     El código de barras es obligatorio y debe ser único.
                   </div>
                 </div>
 
                 <div class="mb-3">
-                  <label for="nombre" class="form-label"
-                    >Nombre del Producto *</label
-                  >
+                  <label for="nombre" class="form-label">
+                    Nombre del producto *
+                  </label>
                   <input
                     type="text"
                     class="form-control"
                     id="nombre"
+                    name="nombre"
                     required
-                    placeholder="Ej. Detergente Líquido 1L"
+                    autocomplete="off"
+                    placeholder="Ej. Detergente líquido 1 L"
                   />
                   <div class="invalid-feedback">
                     El nombre del producto es obligatorio.
@@ -76,9 +195,14 @@
 
                 <div class="mb-3">
                   <label for="categoria" class="form-label">Categoría *</label>
-                  <select class="form-select" id="categoria" required>
+                  <select
+                    class="form-select"
+                    id="categoria"
+                    name="categoria"
+                    required
+                  >
                     <option value="" selected disabled>
-                      Selecciona una categoría...
+                      Selecciona una categoría…
                     </option>
                     <option value="Aseo del Hogar">Aseo del Hogar</option>
                     <option value="Cuidado Personal">Cuidado Personal</option>
@@ -95,90 +219,216 @@
 
                 <div class="row">
                   <div class="col-6 mb-3">
-                    <label for="precio" class="form-label"
-                      >Precio (COP) *</label
-                    >
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="0.01"
-                      class="form-control"
-                      id="precio"
-                      required
-                      placeholder="Ej. 8500"
-                    />
-                    <div class="invalid-feedback">Debe ser mayor a 0.</div>
+                    <label for="precio" class="form-label">Precio (COP) *</label>
+                    <div class="input-group">
+                      <span class="input-group-text" aria-hidden="true">$</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        min="0.01"
+                        class="form-control"
+                        id="precio"
+                        name="precio"
+                        required
+                        inputmode="decimal"
+                        placeholder="8500"
+                      />
+                      <div class="invalid-feedback">
+                        Debe ser un número mayor a 0.
+                      </div>
+                    </div>
                   </div>
 
                   <div class="col-6 mb-3">
                     <label for="stock" class="form-label">Stock *</label>
-                    <input
-                      type="number"
-                      step="1"
-                      min="0"
-                      class="form-control"
-                      id="stock"
-                      required
-                      placeholder="Ej. 25"
-                    />
-                    <div class="invalid-feedback">
-                      Entero mayor o igual a 0.
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        step="1"
+                        min="0"
+                        class="form-control"
+                        id="stock"
+                        name="stock"
+                        required
+                        inputmode="numeric"
+                        placeholder="25"
+                      />
+                      <span class="input-group-text" aria-hidden="true">uds</span>
+                      <div class="invalid-feedback">
+                        Entero mayor o igual a 0.
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="d-grid gap-2 mt-2">
-                  <button type="submit" class="btn btn-success" id="btn-submit">
-                    Guardar Producto
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-brand" id="btn-submit">
+                    <i class="bi bi-check2-circle me-1" aria-hidden="true"></i>
+                    <span>Guardar producto</span>
                   </button>
                   <button
                     type="button"
-                    class="btn btn-secondary d-none"
+                    class="btn btn-outline-secondary d-none"
                     id="btn-cancel"
                   >
-                    Cancelar Edición
+                    Cancelar edición
                   </button>
                 </div>
               </form>
+
+              <p class="form-footnote">
+                <i class="bi bi-shield-check me-1" aria-hidden="true"></i>
+                Los campos marcados con * son obligatorios. El precio debe ser
+                mayor a 0 y el stock un entero no negativo.
+              </p>
             </div>
-          </div>
+          </section>
         </div>
 
-        <!-- Tabla de Productos (GET / DELETE) -->
-        <div class="col-lg-8">
-          <div class="card shadow-sm">
-            <div
-              class="card-header bg-white d-flex justify-content-between align-items-center"
-            >
-              <span class="fw-semibold"
-                >Catálogo en Base de Datos (SQLite)</span
-              >
-              <button
-                class="btn btn-sm btn-outline-primary"
-                onclick="cargarProductos()"
-              >
-                Actualizar Lista
-              </button>
+        <div class="col-xl-8" id="catalogo">
+          <section class="panel" aria-labelledby="catalogo-title">
+            <div class="panel__head">
+              <div>
+                <h2 class="panel__title" id="catalogo-title">
+                  <i class="bi bi-journal-text" aria-hidden="true"></i>
+                  Catálogo de productos
+                </h2>
+                <span class="panel__sub" id="contador-lista">
+                  Consultando la base de datos…
+                </span>
+              </div>
+
+              <div class="catalog-tools">
+                <div class="search">
+                  <i class="bi bi-search" aria-hidden="true"></i>
+                  <label class="visually-hidden" for="buscador">
+                    Buscar producto por nombre, código o categoría
+                  </label>
+                  <input
+                    type="search"
+                    class="form-control"
+                    id="buscador"
+                    placeholder="Buscar producto, código…"
+                    autocomplete="off"
+                  />
+                  <kbd aria-hidden="true">/</kbd>
+                </div>
+
+                <label class="visually-hidden" for="filtro-categoria">
+                  Filtrar por categoría
+                </label>
+                <select class="form-select filter-select" id="filtro-categoria">
+                  <option value="">Todas las categorías</option>
+                  <option value="Aseo del Hogar">Aseo del Hogar</option>
+                  <option value="Cuidado Personal">Cuidado Personal</option>
+                  <option value="Lavandería">Lavandería</option>
+                  <option value="Utensilios de Limpieza">
+                    Utensilios de Limpieza
+                  </option>
+                  <option value="Desinfección">Desinfección</option>
+                </select>
+
+                <button
+                  type="button"
+                  class="btn-icon"
+                  id="btn-refresh"
+                  title="Actualizar lista"
+                  aria-label="Actualizar lista de productos"
+                >
+                  <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+                </button>
+              </div>
             </div>
-            <div class="card-body table-responsive">
-              <table class="table table-hover align-middle">
-                <thead class="table-light">
+
+            <div class="table-wrap">
+              <table class="table catalog-table">
+                <caption class="visually-hidden">
+                  Productos registrados en el inventario de Distribuidora La
+                  Española
+                </caption>
+                <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Cód. Barras</th>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Creado en</th>
-                    <th class="text-end">Acciones</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Cód. barras</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col" class="text-end">Precio</th>
+                    <th scope="col" class="text-end">Stock</th>
+                    <th scope="col" class="d-none d-lg-table-cell">Creado</th>
+                    <th scope="col" class="text-end">Acciones</th>
                   </tr>
                 </thead>
-                <tbody id="table-body">
-                  <!-- Renderizado dinámico -->
-                </tbody>
+                <tbody id="table-body"></tbody>
               </table>
             </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div>
+          <strong>Distribuidora La Española</strong> · Universidad Incca de
+          Colombia · Ingeniería de Sistemas
+        </div>
+        <div class="site-footer__authors">
+          <span><i class="bi bi-person" aria-hidden="true"></i>Diego Andrés Cubillos</span>
+          <span><i class="bi bi-person" aria-hidden="true"></i>Héctor Velasco</span>
+          <span><i class="bi bi-book" aria-hidden="true"></i>Ingeniería de Software III</span>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="toast-container"
+      class="toast-container position-fixed top-0 end-0"
+      aria-live="polite"
+      aria-atomic="false"
+    ></div>
+
+    <div
+      class="modal fade"
+      id="confirm-modal"
+      tabindex="-1"
+      aria-labelledby="confirm-title"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header align-items-start gap-3">
+            <span class="modal-icon" aria-hidden="true">
+              <i class="bi bi-trash3"></i>
+            </span>
+            <div class="flex-grow-1">
+              <h2 class="modal-title" id="confirm-title">Eliminar producto</h2>
+              <p class="mb-0 small text-muted">
+                Esta acción no se puede deshacer.
+              </p>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            ¿Seguro que quieres eliminar
+            <strong id="confirm-name">este producto</strong> del inventario?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-light"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button type="button" class="btn btn-danger" id="confirm-delete">
+              <i class="bi bi-trash3 me-1" aria-hidden="true"></i>
+              Sí, eliminar
+            </button>
           </div>
         </div>
       </div>

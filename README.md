@@ -1,3 +1,14 @@
+## Licencia
+
+Proyecto académico desarrollado 
+**Ingeniería de Software III** 
+**Universidad Incca de Colombia**
+
+**Autores:** 
+Diego Andrés Cubillos 
+Héctor Velasco
+
+
 # Distribuidora La Española — Sistema Fullstack de Inventario
 
 Aplicación fullstack para la gestión del inventario de **Distribuidora La Española**, una distribuidora especializada en productos de **aseo, limpieza e higiene del hogar**: detergentes, jabones, traperos, escobas, desinfectantes y artículos similares.
@@ -474,8 +485,4 @@ curl -i -X DELETE http://localhost:3000/api/productos/1
 
 ---
 
-## Licencia
 
-Proyecto académico desarrollado para la materia **Ingeniería de Software III** de la **Universidad Incca de Colombia**. Licencia MIT.
-
-**Autores:** Diego Andrés Cubillos · Héctor Velasco
