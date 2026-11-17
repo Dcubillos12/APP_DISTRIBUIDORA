@@ -148,7 +148,12 @@ APP_DISTRIBUIDORA/
 │           └── productos.repository.js
 └── Front/
     ├── index.html                # Interfaz de usuario (Bootstrap)
-    └── app.js                    # Lógica del cliente y consumo de la API
+    ├── styles.css                # Sistema de diseño y estilos propios
+    ├── app.js                    # Lógica del cliente y consumo de la API
+    └── public/
+        ├── escudo.png            # Escudo de la marca
+        ├── favicon.png           # Icono del sitio
+        └── banner-espanola.jpg   # Banner principal del hero
 ```
 
 ---

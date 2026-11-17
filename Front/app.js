@@ -67,6 +67,7 @@ const refs = {
   apiStatus: $("api-status"),
   apiStatusText: $("api-status-text"),
   lastUpdate: $("last-update"),
+  panelUpdated: $("panel-updated"),
   toastContainer: $("toast-container"),
   confirmModal: $("confirm-modal"),
   confirmName: $("confirm-name"),
@@ -202,8 +203,11 @@ function setApiStatus(estado) {
 
 function marcarActualizacion() {
   ultimaActualizacion = new Date();
-  refs.lastUpdate.textContent = `· ${fmtHora.format(ultimaActualizacion)}`;
+  const hora = fmtHora.format(ultimaActualizacion);
+  refs.lastUpdate.textContent = `· ${hora}`;
   refs.lastUpdate.setAttribute("datetime", ultimaActualizacion.toISOString());
+  refs.panelUpdated.textContent = hora;
+  refs.panelUpdated.setAttribute("datetime", ultimaActualizacion.toISOString());
 }
 
 function manejarErrorRed(error) {
@@ -254,7 +258,7 @@ function productosFiltrados() {
 function filaVacia({ icono, titulo, texto, accion = "" }) {
   return `
     <tr>
-      <td colspan="8">
+      <td colspan="6">
         <div class="empty-state">
           <span class="empty-state__icon" aria-hidden="true">
             <i class="bi ${icono}"></i>
@@ -279,19 +283,25 @@ function filaProducto(producto) {
 
   return `
     <tr>
-      <td class="cell-id">#${escapeHtml(producto.id)}</td>
-      <td><span class="code-chip">${escapeHtml(producto.codigo_barras)}</span></td>
-      <td class="product-name">${nombre}</td>
       <td>
+        <div class="product-cell">
+          <span class="product-name">${nombre}</span>
+          <span class="product-meta">
+            <span class="code-chip">${escapeHtml(producto.codigo_barras)}</span>
+            <span class="cell-id">#${escapeHtml(producto.id)}</span>
+          </span>
+        </div>
+      </td>
+      <td data-label="Categoría">
         <span class="cat-badge ${claseCategoria}">
           ${escapeHtml(producto.categoria)}
         </span>
       </td>
-      <td class="price">${fmtCOP.format(precio)}</td>
-      <td class="text-end">
+      <td class="price" data-label="Precio">${fmtCOP.format(precio)}</td>
+      <td class="text-end" data-label="Stock">
         <span class="stock-badge ${claseStock}">${etiquetaStock}</span>
       </td>
-      <td class="cell-date d-none d-lg-table-cell">
+      <td class="cell-date d-none d-md-table-cell" data-label="Creado">
         ${formatearFecha(producto.creado_en)}
       </td>
       <td>
@@ -326,7 +336,7 @@ function renderTabla() {
   if (state.cargando) {
     refs.tableBody.innerHTML = `
       <tr>
-        <td colspan="8">
+        <td colspan="6">
           <div class="empty-state">
             <span class="empty-state__icon" aria-hidden="true">
               <span class="spinner-border text-primary" role="status"></span>

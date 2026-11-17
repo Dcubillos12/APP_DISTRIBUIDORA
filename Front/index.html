@@ -9,6 +9,7 @@
     />
     <meta name="theme-color" content="#0f2547" />
     <title>Distribuidora La Española — Panel de Inventario</title>
+    <link rel="icon" type="image/png" href="public/favicon.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,11 +33,15 @@
     <header class="app-bar">
       <div class="app-bar__inner">
         <a class="brand" href="#contenido" aria-label="Distribuidora La Española, ir al inicio">
-          <span
-            class="brand-mark"
-            role="img"
-            aria-label="Escudo de Distribuidora La Española"
-          ></span>
+          <span class="brand-crest" aria-hidden="true">
+            <img
+              src="public/escudo.png"
+              alt=""
+              width="132"
+              height="167"
+              decoding="async"
+            />
+          </span>
           <span class="brand-copy">
             <span class="brand-name">Distribuidora <em>La Española</em></span>
             <span class="brand-sub">Panel de inventario · Aseo y limpieza</span>
@@ -72,17 +77,46 @@
       <section class="hero" aria-label="Banner de Distribuidora La Española">
         <img
           class="hero__img"
-          src="public/banner-logo.jpg"
-          alt="Banner de Distribuidora La Española: tu fuente confiable de productos populares"
-          width="1408"
-          height="330"
+          src="public/banner-espanola.jpg"
+          alt="Banner de Distribuidora La Española: la fuente de confianza de tu barrio, productos de aseo y más"
+          width="1311"
+          height="316"
           fetchpriority="high"
         />
         <div class="hero__scrim" aria-hidden="true"></div>
+        <a
+          class="hero__cta"
+          href="#catalogo"
+          aria-label="Explorar el catálogo de productos"
+        >
+          <span>Explora nuestro catálogo</span>
+        </a>
         <div class="hero__badge">
           <span class="dot" aria-hidden="true"></span>
           Inventario en vivo
           <time id="last-update" datetime="">—</time>
+        </div>
+
+        <div class="hero__compact">
+          <img
+            src="public/escudo.png"
+            alt=""
+            width="149"
+            height="168"
+            aria-hidden="true"
+          />
+          <div>
+            <p class="hero__compact-eyebrow">Distribuidora La Española</p>
+            <h2 class="hero__compact-title">
+              Productos de aseo y limpieza para tu negocio
+            </h2>
+            <p class="hero__compact-sub">
+              Calidad y variedad directamente a tu tienda.
+            </p>
+            <a href="#catalogo" class="btn btn-light btn-sm fw-semibold">
+              Explorar catálogo
+            </a>
+          </div>
         </div>
       </section>
 
@@ -348,18 +382,27 @@
                 </caption>
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Cód. barras</th>
                     <th scope="col">Producto</th>
                     <th scope="col">Categoría</th>
                     <th scope="col" class="text-end">Precio</th>
                     <th scope="col" class="text-end">Stock</th>
-                    <th scope="col" class="d-none d-lg-table-cell">Creado</th>
+                    <th scope="col" class="d-none d-md-table-cell">Creado</th>
                     <th scope="col" class="text-end">Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="table-body"></tbody>
               </table>
+            </div>
+
+            <div class="panel__foot">
+              <span>
+                <i class="bi bi-database-check" aria-hidden="true"></i>
+                Datos servidos por la API REST sobre SQLite
+              </span>
+              <span>
+                Actualizado
+                <time id="panel-updated" datetime="">—</time>
+              </span>
             </div>
           </section>
         </div>
@@ -368,9 +411,21 @@
 
     <footer class="site-footer">
       <div class="site-footer__inner">
-        <div>
-          <strong>Distribuidora La Española</strong> · Universidad Incca de
-          Colombia · Ingeniería de Sistemas
+        <div class="site-footer__brand">
+          <span class="site-footer__crest" aria-hidden="true">
+            <img
+              src="public/escudo.png"
+              alt=""
+              width="132"
+              height="167"
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
+          <span>
+            <strong>Distribuidora La Española</strong> · Universidad Incca de
+            Colombia · Ingeniería de Sistemas
+          </span>
         </div>
         <div class="site-footer__authors">
           <span><i class="bi bi-person" aria-hidden="true"></i>Diego Andrés Cubillos</span>
